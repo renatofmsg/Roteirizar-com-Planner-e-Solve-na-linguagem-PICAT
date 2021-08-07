@@ -1,0 +1,95 @@
+import util.
+import planner.
+
+main =>
+    Fatos =
+        $[rota(p1,p1,999999),rota(p1,p2,126500),rota(p1,p3,123700),rota(p1,p4,130500),rota(p1,p5,117900),rota(p1,p6,115200),rota(p1,p7,122200),rota(p1,p8,133800),rota(p1,p9,126400),rota(p1,p10,118200),rota(p1,p11,107600),
+        rota(p2,p1,126500),rota(p2,p2,999999),rota(p2,p3,134500),rota(p2,p4,81600),rota(p2,p5,135100),rota(p2,p6,136400),rota(p2,p7,148400),rota(p2,p8,156800),rota(p2,p9,158200),rota(p2,p10,163100),rota(p2,p11,151000),
+        rota(p3,p1,123700),rota(p3,p2,134500),rota(p3,p3,999999),rota(p3,p4,61900),rota(p3,p5,7100),rota(p3,p6,11200),rota(p3,p7,17700),rota(p3,p8,22600),rota(p3,p9,27200),rota(p3,p10,39300),rota(p3,p11,33900),
+        rota(p4,p1,130500),rota(p4,p2,81600),rota(p4,p3,61900),rota(p4,p4,999999),rota(p4,p5,65400),rota(p4,p6,68300),rota(p4,p7,79000),rota(p4,p8,83900),rota(p4,p9,88900),rota(p4,p10,98800),rota(p4,p11,89600),
+        rota(p5,p1,117900),rota(p5,p2,135100),rota(p5,p3,7100),rota(p5,p4,65400),rota(p5,p5,999999),rota(p5,p6,4100),rota(p5,p7,13800),rota(p5,p8,22100),rota(p5,p9,23800),rota(p5,p10,33900),rota(p5,p11,27300),
+        rota(p6,p1,115200),rota(p6,p2,136400),rota(p6,p3,11200),rota(p6,p4,68300),rota(p6,p5,4100),rota(p6,p6,999999),rota(p6,p7,12000),rota(p6,p8,22000),rota(p6,p9,21900),rota(p6,p10,30600),rota(p6,p11,23300),
+        rota(p7,p1,122200),rota(p7,p2,148400),rota(p7,p3,17700),rota(p7,p4,79000),rota(p7,p5,13800),rota(p7,p6,12000),rota(p7,p7,999999),rota(p7,p8,11700),rota(p7,p9,10100),rota(p7,p10,21900),rota(p7,p11,19700),
+        rota(p8,p1,133800),rota(p8,p2,156800),rota(p8,p3,22600),rota(p8,p4,83900),rota(p8,p5,22100),rota(p8,p6,22000),rota(p8,p7,11700),rota(p8,p8,999999),rota(p8,p9,10700),rota(p8,p10,26000),rota(p8,p11,28900),
+        rota(p9,p1,126400),rota(p9,p2,158200),rota(p9,p3,27200),rota(p9,p4,88900),rota(p9,p5,23800),rota(p9,p6,21900),rota(p9,p7,10100),rota(p9,p8,10700),rota(p9,p9,999999),rota(p9,p10,15300),rota(p9,p11,19400),
+        rota(p10,p1,118200),rota(p10,p2,163100),rota(p10,p3,39300),rota(p10,p4,98800),rota(p10,p5,33900),rota(p10,p6,30600),rota(p10,p7,21900),rota(p10,p8,26000),rota(p10,p9,15300),rota(p10,p10,999999),rota(p10,p11,12700),
+        rota(p11,p1,107600),rota(p11,p2,151000),rota(p11,p3,33900),rota(p11,p4,89600),rota(p11,p5,27300),rota(p11,p6,23300),rota(p11,p7,19700),rota(p11,p8,28900),rota(p11,p9,19400),rota(p11,p10,12700),rota(p11,p11,999999)],
+    cl_facts(Fatos,[$rota(+,+,+,-,-,-)]),
+    Barcos = [[p1,[],15]],
+    % Barcos = [[p1,[],7],[p1,[],5]],
+    % Barcos = [[p1,[],2],[p1,[],2],[p1,[],2]],
+    Cargas =
+        [(p1,p2),(p1,p3)],
+        % [(p1,p2),(p1,p3),(p2,p1),(p3,p1)],
+        % [(p1,p2),(p1,p3),(p1,p4),(p1,p5),(p1,p6)],
+        % [(p1,p2),(p1,p3),(p1,p4),(p1,p5),(p1,p6),(p2,p1),(p6,p1)],
+        % [(p1,p2),(p1,p3),(p1,p4),(p1,p5),(p1,p6),(p1,p7),(p1,p8),(p1,p9),(p1,p10),(p1,p11)],
+        % [(p1,p2),(p1,p3),(p1,p4),(p1,p5),(p1,p6),(p1,p7),(p1,p8),(p1,p9),(p1,p10),(p1,p11),(p2,p1),(p6,p1),(p11,p1)],
+    Limite = 900_000,
+    best_plan_bb({Barcos,Cargas},Limite,Plano,Custo),
+    foreach (Acao in Plano)
+       println(Acao)
+    end,
+    println(Custo).
+
+final({Barcos,[]}) =>
+    foreach([_Loc,Dests,_Cap] in Barcos)
+        Dests == [],        
+    end.
+
+ action({Barcos,Cargas},ProximoEstado,Acao,AcaoCusto),
+    select([Loc,Dests,Cap],Barcos,BarcosR),
+    select(Loc,Dests,DestsR)
+ =>
+    Acao = $descarrega(Loc),    
+    AcaoCusto = 1800, % tempo para descarregar
+    select([Loc,Dests,Cap],Barcos,BarcosR),
+    select(Dest,Dests,DestsR),
+    NovosBarcos = insert_ordered(BarcosR,[Loc,DestsR,Cap]),
+    (Loc == Dest -> 
+        NovasCargas = Cargas; 
+        NovasCargas = insert_ordered(Cargas,(Loc,Dest))),
+    ProximoEstado = {NovosBarcos,NovasCargas}.
+
+action({Barcos,Cargas},ProximoEstado,Acao,AcaoCusto) ?=>
+    Acao = $carrega(Loc),
+    AcaoCusto = 1, % eh feito durante a noite
+    select([Loc,Dests,Cap],Barcos,BarcosR),
+    length(Dests) < Cap,
+    select((Loc,Dest),Cargas,CargasR),   
+    NovosDests = insert_ordered(Dests,Dest),
+    NovosBarcos = insert_ordered(BarcosR,[Loc,NovosDests,Cap]),
+    ProximoEstado = {NovosBarcos,CargasR}.
+
+action({Barcos,Cargas},ProximoEstado,Acao,AcaoCusto) =>
+    Acao = $move(Loc,ProximaLoc),
+    select([Loc|Tail],Barcos,BarcosR),
+    rota(Loc,ProximaLoc,AcaoCusto),
+    NovosBarcos = insert_ordered(BarcosR,[ProximaLoc|Tail]),
+    ProximoEstado = {NovosBarcos,Cargas},
+    estimativa_custo(ProximoEstado) =< current_resource()-AcaoCusto.
+
+table
+estimativa_custo({Barcos,Cargas}) = Custo =>
+    CargasCarregadas = [(Loc,Dest) : 
+                      [Loc,Dests,_] in Barcos, Dest in Dests],
+    NumCargasCarregadas = length(CargasCarregadas),
+    LocsBarcos = [Loc : [Loc|_] in Barcos],
+    custo_viagem(LocsBarcos,CargasCarregadas,Cargas,0,CustoTotal),
+    Custo = CustoTotal+NumCargasCarregadas+length(Cargas)*2.
+
+custo_viagem(_Barcos,[],[],Custo0,Custo) => Custo=Custo0.
+custo_viagem(Barcos,[(PLoc,PDest)|Cargas],Cargas2,Custo0,Custo) => 
+    Custo1 = min([D1+D2 : TLoc in Barcos,
+                        menor_dist(TLoc,PLoc,D1),
+                        menor_dist(PLoc,PDest,D2)]),
+    custo_viagem(Barcos,Cargas,Cargas2,max(Custo0,Custo1),Custo).
+custo_viagem(Barcos,[],Cargas2,Custo0,Custo) =>
+    custo_viagem(Barcos,Cargas2,[],Custo0,Custo).
+
+table (+,+,min)
+menor_dist(X,X,Dist) => Dist=0.
+menor_dist(X,Y,Dist) => 
+    rota(X,Z,DistXZ),
+    menor_dist(Z,Y,DistZY),
+    Dist = DistXZ+DistZY.

@@ -1,0 +1,181 @@
+import cp.
+import util.
+
+main =>
+    Distancias = distancias(),
+    Tempo = tempo(Distancias),
+    CapacidadeBarcos = [5000],
+    % CapacidadeBarcos = [800,800,500],
+    TotalBarcos = CapacidadeBarcos.length,
+%    TotalDemandas = 6,
+    TotalDemandas = 1,
+    Xs = new_array(TotalDemandas),
+    Totais = new_array(TotalDemandas),
+
+    foreach (D in 1..TotalDemandas)
+        printf("\n\n#\n#\n#\n# Processando demanda %u\n#\n#\n#\n",D),
+        Demanda = demanda(D),
+        [Xs[D],Totais[D]] = rota(Tempo,Demanda,CapacidadeBarcos)
+    end,
+
+    N = Tempo.length,
+
+    foreach (D in 1..TotalDemandas)
+        printf("\nDemanda %u:\n",D),
+        X = Xs[D],
+        Total = Totais[D],
+        printf("Tempo Total: %u segundos (%f horas)\n", Total, Total/(60*60)),
+
+        foreach (K in 1..TotalBarcos)
+            imprime(X[K],K),
+            Trajeto = sum([Tempo[I,J] * X[K,I,J] : I in 1..N-1, J in 2..N]),
+            printf("Tempo: %u segundos (%f horas)\n", Trajeto, Trajeto/(60*60))
+        end,
+    end.
+
+rota(Tempo,Demanda,Veiculos) = [X,Total] =>
+    % Quantidade de distâncias
+    N = Tempo.length,
+    V = Veiculos.length,
+
+    println('Variaveis de Decisao...'),
+    %
+    % Variável de Decisão
+    %
+    X = new_array(V,N,N),
+    X :: 0..1,
+    %
+    % Restrição 1
+    %
+    println('Cada plataforma é atendida pro um único USV...'),
+    foreach (I in 2..N-1)
+        sum([X[K,I,J] : J in 2..N, K in 1..V]) #= 1
+    end,
+    %
+    % Restrição 2
+    %
+    println('Soma das demandas é menor que a capacidade dos USVs...'),
+    foreach (K in 1..V)
+        sum([Demanda[I] * X[K,I,J] : J in 2..N, I in 2..N-1]) #<= Veiculos[K]
+    end,
+    %
+    % Restrição 3
+    %
+    println('Os USVs saem do porto...'),
+    foreach (K in 1..V)
+        sum([X[K,1,J] : J in 2..N]) #= 1
+    end,
+    %
+    % Restricao 4
+    %
+    println('O USV só sai de h se chegou...'),
+    foreach (K in 1..V, H in 2..N)
+        sum([X[K,I,H] : I in 1..N-1]) - sum([X[K,H,J] : J in 2..N]) #= 0
+    end,
+    %
+    % Restricao 5
+    %
+    println('O USV retorna para o porto...'),
+    foreach (K in 1..V)
+        sum([X[K,I,N] : I in 1..N-1]) #= 1
+    end,
+    %
+    % Esta variavel já impoem um limite de quanto tempo para toda a rota
+    % Todas as cargas precisam ser entregues no intervalo definido
+    %
+    S = new_array(V, N),
+    S :: 0..500_000,
+    %
+    % Restricao 6
+    %
+    println('USV não chega em j antes de Sik + Tij...'),
+    foreach (K in 1..V, I in 1..N-1, J in 2..N)
+        S[K,I] + Tempo[I,J] - S[K,J] - (1 - X[K,I,J]) * 1_000_000 #<= 0
+    end,
+
+    %
+    % Função Objetivo
+    %
+    println('Funcao objetivo...'),
+    Total #= sum([Tempo[I,J] * X[K,I,J] : K in 1..V, I in 1..N-1, J in 2..N]),
+
+    println('Resolvendo...'),
+    solve($[min(Total)],X),
+    true. 
+
+imprime(X,R) =>
+    printf("Rota %u: 1, ",R),
+    nth(Ind,X[1],1),
+    while (Ind != 7)           % Alterar para 12 caso sejam 10 destinos
+        printf("%u, ",Ind),
+        I := Ind,
+        nth(A,X[I],1),
+        Ind := A,
+    end,
+    printf("1.\n").
+
+% Matriz para 5 destinos
+distancias = D =>
+    %     porto  P1      P2     P3     P4     P5     porto
+    D = {{     0,126500,123700,130500,117900,115200,     0},  % porto
+         {126500,     0,134500, 81600,135100,136400,126500},  % P1
+         {123700,134500,     0, 61900,  7100, 11200, 17700},  % P2
+         {130500, 81600, 61900,     0, 65400, 68300, 79000},  % P3
+         {117900,135100,  7100, 65400,     0,  4100, 13800},  % P4
+         {115200,136400, 11200, 68300,  4100,     0, 12000},  % P5
+         {     0,126500,123700,130500,117900,115200,    0}}. % porto
+
+% Matriz para 10 destinos
+%distancias = D =>
+    %     porto  P1      P2     P3     P4     P5     P6     P7     P8     P9     P10   porto
+%    D = {{     0,126500,123700,130500,117900,115200,122200,133800,126400,118200,107600,     0},  % porto
+%         {126500,     0,134500, 81600,135100,136400,148400,156800,158200,163100,151000,126500},  % P1
+%         {123700,134500,     0, 61900,  7100, 11200, 17700, 22600, 27200, 39300, 33900,123700},  % P2
+%         {130500, 81600, 61900,     0, 65400, 68300, 79000, 83900, 88900, 98800, 89600,130500},  % P3
+%         {117900,135100,  7100, 65400,     0,  4100, 13800, 22100, 23800, 33900, 27300,117900},  % P4
+%         {115200,136400, 11200, 68300,  4100,     0, 12000, 22000, 21900, 30600, 23300,115200},  % P5
+%         {122200,148400, 17700, 79000, 13800, 12000,     0, 11700, 10100, 21900, 19700,122200},  % P6
+%         {133800,156800, 22600, 83900, 22100, 22000, 11700,     0, 10700, 26000, 28900,133800},  % P7
+%         {126400,158200, 27200, 88900, 23800, 21900, 10100, 10700,     0, 15300, 19400,126400},  % P8
+%         {118200,163100, 39300, 98800, 33900, 30600, 21900, 26000, 15300,     0, 12700,118200},  % P9
+%         {107600,151000, 33900, 89600, 27300, 23300, 19700, 28900, 19400, 12700,     0,107600},  % P10
+%         {     0,126500,123700,130500,117900,115200,122200,133800,126400,118200,107600,     0}}. % porto
+
+% Demandas para 5 destinos
+demanda(I) = D =>
+    if I == 1 then
+        D = {0,465,366,380,323,366,0}, % 3712        
+    elseif I == 2 then
+        D = {0,465,366,380,323,366,0}, % 3712        
+    elseif I == 3 then
+        D = {0,465,366,380,323,366,0}, % 3712        
+    elseif I == 4 then
+        D = {0,465,366,380,323,366,0}, % 3712        
+    elseif I ==5 then
+        D = {0,465,366,380,323,366,0}, % 3712        
+    else
+        D = {0,465,366,380,323,366,0}, % 3712        
+        end.
+
+% Demandas para 10 destinos
+%demanda(I) = D =>
+%    if I == 1 then
+%        D = {0,465,366,380,323,366,399,306,310,397,400,0}, % 3712
+%     elseif I == 2 then
+%        D = {0,341,398,373,304,352,294,284,324,339,301,0}, % 3310
+%    elseif I == 3 then
+%        D = {0,179,286,309,289,237,288,221,211,320,218,0}, % 2558
+%    elseif I == 4 then
+%        D = {0,454,451,478,405,381,355,463,294,495,418,0}, % 4194
+%    elseif I ==5 then
+%        D = {0,391,320,430,388,381,299,315,393,450,313,0}, % 3680
+%    else
+%        D = {0,176,148,222,139,185,101,140,206,191,100,0} %1608
+%    end.
+
+tempo(Distancias) = Tempo =>
+    N = Distancias.length,
+    Tempo = new_array(N, N),
+    foreach (I in 1..N, J in 1..N)
+        Tempo[I,J] = Distancias[I,J] // 6 + 30 * 60
+    end.
