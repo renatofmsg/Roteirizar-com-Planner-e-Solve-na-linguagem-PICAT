@@ -16,12 +16,12 @@ https://github.com/renatofmsg/Roteirizar-com-Planner-e-Solve-na-linguagem-PICAT/
 https://github.com/renatofmsg/Roteirizar-com-Planner-e-Solve-na-linguagem-PICAT/blob/main/Algoritmo_Logistica_Solver.pi
 <p>
 - Trabalhos relacionados:
-    - [1] ARPINI, BIANCA PASSOS, Planejamento da logística de suprimento de plataformas offshore por meio de um modelo matemático 2L-CVRP com frota heterogênea e equilíbrio náutico, Universidade Federal do Espírito Santo, 2015
-    - [2] GONÇALVES, RÔMULO PARMA, Uso de algoritmo genético para otimização de rota de embarcação em atendimento a serviços offshore da indústria de óleo e gás, Pontifícia Universidade Católica do Rio de Janeiro, 2020
-    - [3] LOBATO, PEDRO TEIXEIRA CARDOSO, Revisão de Sistema de Medição de Desempenho: Pesquisa-Ação no Caso da Logística da Exploração e Produção de Petróleo, Pontifícia Universidade Católica do Rio de Janeiro, 2014
+    - [1] ARPINI, BIANCA PASSOS, Planejamento da logística de suprimento de plataformas offshore por meio de um modelo matemático 2L-CVRP com frota heterogênea e equilíbrio náutico, Universidade Federal do Espírito Santo, 2015 <p>
+    - [2] GONÇALVES, RÔMULO PARMA, Uso de algoritmo genético para otimização de rota de embarcação em atendimento a serviços offshore da indústria de óleo e gás, Pontifícia Universidade Católica do Rio de Janeiro, 2020 <p>
+    - [3] LOBATO, PEDRO TEIXEIRA CARDOSO, Revisão de Sistema de Medição de Desempenho: Pesquisa-Ação no Caso da Logística da Exploração e Produção de Petróleo, Pontifícia Universidade Católica do Rio de Janeiro, 2014 <p>
     - [4] MARCELLINO, FELLIPE FERNANDES CARDOSO, Roteirização de entregas para uma Startup do setor de alimentação saudável, Universidade de São Paulo, 2017
-    - [5] ZHOU, NENG-FA and FRUHMAN, JONATHAN, A User´s Guide to Picat, http://picat-lang.org/download/picat_guide.pdf
-    - [6] ZHOU, NENG-FA; FRUHMAN, JONATHAN and KJELLERSTRAND, HAKAN, Constraint Solving and Planning with Picat, http://picat-lang.org/picatbook2015.html
+    - [5] ZHOU, NENG-FA and FRUHMAN, JONATHAN, A User´s Guide to Picat, http://picat-lang.org/download/picat_guide.pdf <p>
+    - [6] ZHOU, NENG-FA; FRUHMAN, JONATHAN and KJELLERSTRAND, HAKAN, Constraint Solving and Planning with Picat, http://picat-lang.org/picatbook2015.html <p>
 
 ---
 
