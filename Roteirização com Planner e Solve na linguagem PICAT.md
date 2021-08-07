@@ -9,8 +9,11 @@
 
 Trabalho apresentado ao curso [BI MASTER](https://ica.puc-rio.ai/bi-master) como pré-requisito para conclusão de curso e obtenção de crédito na disciplina "Projetos de Sistemas Inteligentes de Apoio à Decisão".
 
-- [Link para o código](https://github.com/renatofmsg/Roteirizar-com-Planner-e-Solve-na-linguagem-PICAT/blob/main/Algoritmo_Logistica_Planner.pi, ).
-
+- [Link para o código].
+https://github.com/renatofmsg/Roteirizar-com-Planner-e-Solve-na-linguagem-PICAT/blob/main/Algoritmo_Logistica_Planner.pi
+<p>
+https://github.com/renatofmsg/Roteirizar-com-Planner-e-Solve-na-linguagem-PICAT/blob/main/Algoritmo_Logistica_Solver.pi
+<p>
 - Trabalhos relacionados:
     - [1] ARPINI, BIANCA PASSOS, Planejamento da logística de suprimento de plataformas offshore por meio de um modelo matemático 2L-CVRP com frota heterogênea e equilíbrio náutico, Universidade Federal do Espírito Santo, 2015
     - [2] GONÇALVES, RÔMULO PARMA, Uso de algoritmo genético para otimização de rota de embarcação em atendimento a serviços offshore da indústria de óleo e gás, Pontifícia Universidade Católica do Rio de Janeiro, 2020
