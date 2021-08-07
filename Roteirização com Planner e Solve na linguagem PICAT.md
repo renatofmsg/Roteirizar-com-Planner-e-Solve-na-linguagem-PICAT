@@ -15,7 +15,8 @@ https://github.com/renatofmsg/Roteirizar-com-Planner-e-Solve-na-linguagem-PICAT/
 <p>
 https://github.com/renatofmsg/Roteirizar-com-Planner-e-Solve-na-linguagem-PICAT/blob/main/Algoritmo_Logistica_Solver.pi
 <p>
-- Trabalhos relacionados: <p>
+<p>
+Trabalhos relacionados: <p>
     - [1] ARPINI, BIANCA PASSOS, Planejamento da logística de suprimento de plataformas offshore por meio de um modelo matemático 2L-CVRP com frota heterogênea e equilíbrio náutico, Universidade Federal do Espírito Santo, 2015 <p>
     - [2] GONÇALVES, RÔMULO PARMA, Uso de algoritmo genético para otimização de rota de embarcação em atendimento a serviços offshore da indústria de óleo e gás, Pontifícia Universidade Católica do Rio de Janeiro, 2020 <p>
     - [3] LOBATO, PEDRO TEIXEIRA CARDOSO, Revisão de Sistema de Medição de Desempenho: Pesquisa-Ação no Caso da Logística da Exploração e Produção de Petróleo, Pontifícia Universidade Católica do Rio de Janeiro, 2014 <p>
